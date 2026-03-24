@@ -3,24 +3,24 @@ const router = express.Router();
 const supabase = require('../data/supabase'); // Importação padronizada do banco em memória
 
 // Listar todas as categorias
-router.get('/', async (req, res) => {
-    try{
+router.get('/', async (req, res, next) => {
+    try {
         const { data, error } = await supabase
         .from('categorias')
         .select('*')
         .order('id', { ascending: true });
         if (error) {
-        throw error;
+            throw error;
         }
         res.json(data);
-    }catch (error) {
+    } catch (error) {
         next(error);
     }
 
 })
 
-router.post('/', async (req, res) => {
-    try{
+router.post('/', async (req, res, next) => {
+    try {
         const { data, error } = await supabase
         .from('categorias')
         .insert([{ nome: req.body.nome }])
@@ -28,7 +28,7 @@ router.post('/', async (req, res) => {
 
         if (error) throw error;
         res.status(201).json(data[0]);
-    }catch (error) {
+    } catch (error) {
         next(error);
     }
 
