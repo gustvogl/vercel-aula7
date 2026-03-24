@@ -1,4 +1,3 @@
-
 const express = require('express');
 const router = express.Router();
 let supabase = require('../data/supabase');
@@ -16,7 +15,7 @@ router.get('/', async (req, res, next) => {
         if (categoriaId){
             consulta = consulta.eq('categoriaId', categoriaId);
         }
-        const {data, error} = await consulta.order('id', {ascendir: true});
+        const {data, error} = await consulta.order('id', {ascending: true});
 
         if (error) throw error;
         res.json(data);
@@ -27,7 +26,7 @@ router.get('/', async (req, res, next) => {
 
 
 
-router.get('/:id', async (req, res) => {
+router.get('/:id', async (req, res, next) => {
     try{
         const {id} = req.params;
         const{data,error} = await supabase
@@ -47,7 +46,7 @@ router.get('/:id', async (req, res) => {
     }
 });
 
-router.post('/', async (req, res) => {
+router.post('/', async (req, res, next) => {
 try{
     const {data, error} = await supabase
     .from('produtos')
